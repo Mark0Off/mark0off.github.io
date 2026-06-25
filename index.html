@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLAY МОГО СЕРВЕРА — Офіційний сайт</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <a href="https://discord.gg/ksnG7Dbs3f" class="server-logo" id="discordLink" target="_blank" aria-label="Discord">
+    <div class="app-icon">
+      <div class="app-icon-inner">
+        <div class="app-icon-core">
+          <div class="app-icon-stop"></div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <div class="page-shell">
+    <header class="page-header">
+      <div class="page-header-group">
+        <button class="back-button" onclick="app.navigate('home')">← Головна</button>
+      </div>
+      <nav class="year-buttons" id="mainNav"></nav>
+      <div class="page-header-group">
+        <button class="control-button navigation-calendar-btn" onclick="app.navigate('calendar')">📅 Календар</button>
+      </div>
+    </header>
+
+    <main id="app-content" style="width: 100%;">
+      <!-- СЕКЦІЯ ГОЛОВНА -->
+      <section id="view-home" class="view-section active">
+        <div class="hero-shell">
+          <div class="hero-glow"></div>
+          <div class="hero-card">
+            <div class="hero-header">
+              <div class="hero-pill">SLAY МОГО СЕРВЕРА</div>
+            </div>
+            <div class="hero-body">
+              <div class="hero-center">
+                <div class="app-icon">
+                  <div class="app-icon-inner">
+                    <div class="app-icon-core">
+                      <div class="app-icon-stop"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hero-text">
+                  <h1 class="hero-title">SLAY МОГО СЕРВЕРА</h1>
+                  <p class="hero-subtitle">ЩОРІЧНА ПРЕМІЯ</p>
+                </div>
+                <button class="hero-button" onclick="app.navigate('calendar')">КАЛЕНДАР SLAY</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- СЕКЦІЯ ГОЛОСУВАННЯ (НОВИЙ СЛАЙДЕР) -->
+      <section id="view-year" class="view-section">
+        <div class="page-card nominations-card"
+          style="padding: 0; overflow: hidden; background: transparent; border: none; box-shadow: none;">
+
+          <!-- ІНТЕРФЕЙС ГОЛОСУВАННЯ -->
+          <div id="votingInterface" style="display: none;">
+            <div class="nomination-top-nav">
+              <button id="btnPrevNom" class="nav-arrow-small"><svg width="18" height="18" viewBox="0 0 24 24"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18L9 12L15 6" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg></button>
+              <span id="nomCounter">НОМІНАЦІЯ 1 / 12</span>
+              <button id="btnNextNom" class="nav-arrow-small"><svg width="18" height="18" viewBox="0 0 24 24"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 6L15 12L9 18" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg></button>
+            </div>
+
+            <div class="nomination-split-view">
+              <div class="nom-left">
+                <p class="nom-tag">NOMINATION</p>
+                <h1 id="nomTitleDisplay" class="nom-title-display">Назва</h1>
+                <p id="nomDescDisplay" class="nom-desc-display">Опис</p>
+
+                <div class="candidate-slider-area">
+                  <button id="btnPrevCand" class="cand-arrow"><svg width="18" height="18" viewBox="0 0 24 24"
+                      fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M15 18L9 12L15 6" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg></button>
+
+                  <div class="cand-card" id="candCardDisplay">
+                    <div class="cand-media" id="candMediaDisplay"></div>
+                    <div class="cand-info">
+                      <h3 id="candNameDisplay">Ім'я</h3>
+                      <span id="candUserDisplay">@нік</span>
+                      <p id="candDescDisplay">Опис учасника</p>
+                    </div>
+                  </div>
+
+                  <button id="btnNextCand" class="cand-arrow"><svg width="18" height="18" viewBox="0 0 24 24"
+                      fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 6L15 12L9 18" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg></button>
+                </div>
+                <div class="cand-dots" id="candDotsContainer"></div>
+              </div>
+
+              <div class="nom-right">
+                <div class="vote-action-box">
+                  <div class="vote-icon">
+                    <div class="vote-icon-inner"></div>
+                  </div>
+                  <h2 id="voteBoxTitle">ГОЛОСУВАННЯ</h2>
+                  <p id="voteBoxDesc">Оберіть свого кандидата...</p>
+                  <button id="btnVoteAction" class="btn-vote-main">ОБРАТИ КАНДИДАТА</button>
+                  <p id="voteStatusText" class="vote-status-text"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ЕКРАН ФІНАЛІЗАЦІЇ (19/19) -->
+          <div id="submitInterface" class="submit-screen-container" style="display: none;">
+            <div class="submit-icon">🎯</div>
+            <h2>ФІНАЛІЗАЦІЯ ГОЛОСІВ</h2>
+            <p>Ви пройшли всі номінації. Час відправити ваші голоси на сервер.</p>
+            <div id="missingVotesList" class="missing-votes-alert"></div>
+
+            <form id="slayCustomForm">
+              <div class="form-group discord-input-group">
+                <label>Ваш Discord Нікнейм</label>
+                <input type="text" name="discord_user" required placeholder="Наприклад: RomanSlay#1234">
+              </div>
+              <div class="form-group discord-input-group">
+                <label>Секретний ПІН-код</label>
+                <input type="text" name="ticket_code" required placeholder="SLAY-XXXX">
+              </div>
+              <button type="submit" id="submitVoteBtn" class="form-submit">ВІДПРАВИТИ ВСІ ГОЛОСИ</button>
+              <div id="formStatus" style="display:none; margin-top: 15px; font-weight: bold;"></div>
+            </form>
+          </div>
+
+          <!-- ОВЕРЛЕЙ УСПІХУ -->
+          <div id="successOverlay" class="form-success-overlay" style="display: none;">
+            <div class="success-content">
+              <div class="success-icon">✓</div>
+              <h3>ГОЛОСИ ЗАРАХОВАНО!</h3>
+              <p>Ваш ПІН-код успішно перевірено. Дякуємо за участь!</p>
+              <button type="button" class="form-submit" style="width: auto; padding: 12px 36px;"
+                onclick="location.reload()">Зрозуміло</button>
+            </div>
+          </div>
+
+          <!-- АРХІВ / РЕЗУЛЬТАТИ -->
+          <div id="yearFormClosed"
+            style="display: none; padding: 40px; text-align: center; background: rgba(10,10,10,0.9); border-radius: 28px; border: 1px solid var(--border-subtle);">
+          </div>
+
+        </div>
+      </section>
+
+      <!-- КОНСТИТУЦІЯ -->
+      <section id="view-constitution" class="view-section">
+        <div class="page-card">
+          <div class="embed-container">
+            <iframe id="constitutionFrame" src="" frameborder="0" allowfullscreen style="display:none;"></iframe>
+            <div id="constitutionPlaceholder" class="constitution-placeholder">
+              <div class="cp-icon">📜</div>
+              <h2>КОНСТИТУЦІЯ СЕРВЕРА</h2>
+              <p>Вкажіть посилання на Google Docs у <code>data.js</code> → <code>constitutionDocUrl</code></p>
+              <p style="font-size:0.8rem; color: rgba(255,255,255,0.3); margin-top:8px;">Формат:
+                https://docs.google.com/document/d/ID/edit</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- КАЛЕНДАР -->
+      <section id="view-calendar" class="view-section">
+        <div class="calendar-page">
+          <aside class="calendar-sidebar">
+            <div class="sidebar-card">
+              <div class="sidebar-header"><span class="label-pill">КАЛЕНДАР SLAY</span>
+                <p class="sidebar-copy">Усі важливі події з Google Таблиці.</p>
+              </div>
+              <div class="mini-calendar-card">
+                <div class="mini-calendar-header">
+                  <button type="button" class="icon-button mini-nav" id="miniPrevMonth">←</button>
+                  <div class="mini-calendar-title"><span id="miniMonthLabel">...</span><strong
+                      id="miniYearLabel">...</strong></div>
+                  <button type="button" class="icon-button mini-nav" id="miniNextMonth">→</button>
+                </div>
+                <div class="mini-calendar-grid" id="miniCalendarGrid"></div>
+              </div>
+            </div>
+
+            <!-- ЛЕГЕНДА КАТЕГОРІЙ -->
+            <div class="sidebar-card">
+              <div class="sidebar-header"><span class="label-pill">КАТЕГОРІЇ</span></div>
+              <div class="category-legend">
+                <div class="cat-item"><span class="cat-dot" style="background:#ffd700;"></span> 🏆 Турнір</div>
+                <div class="cat-item"><span class="cat-dot" style="background:#ff007b;"></span> 🎉 Свято</div>
+                <div class="cat-item"><span class="cat-dot" style="background:#00b0ff;"></span> ⚖️ СУД</div>
+                <div class="cat-item"><span class="cat-dot" style="background:#a259ff;"></span> 🎮 Стрім</div>
+                <div class="cat-item"><span class="cat-dot" style="background:#ff9800;"></span> 📌 Інше</div>
+              </div>
+            </div>
+          </aside>
+          <main class="calendar-main">
+            <div class="main-calendar-card">
+              <div class="calendar-main-header">
+                <div>
+                  <p class="calendar-main-label">Найближчі події</p>
+                  <h1 class="calendar-main-title">РОЗКЛАД</h1>
+                </div>
+              </div>
+              <div id="upcomingEventsList" class="upcoming-events-list">
+                <p style="color:var(--text-muted); text-align:center; padding:40px 0;">Завантаження подій...</p>
+              </div>
+            </div>
+          </main>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="calendar.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

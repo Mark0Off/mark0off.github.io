@@ -1,0 +1,3090 @@
+/* ==========================================================================
+   MASTER CYBER-GAMING STYLESHEET: SLAY МОГО СЕРВЕРА
+   (SPA + Custom Grid Form + Calendar + Media Cards)
+========================================================================== */
+
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+
+  --bg-main: #050505;
+  --bg-card: rgba(10, 10, 10, 0.95);
+  --bg-glass: rgba(15, 15, 15, 0.6);
+  --border-glow: rgba(255, 60, 0, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  --text-main: #f5f5f5;
+  --text-muted: #b3b3b3;
+
+  --primary: #ff3c00;
+  --primary-glow: rgba(255, 60, 0, 0.3);
+  --accent-orange: #ff7c45;
+  --accent-pink: #ff007b;
+}
+
+@keyframes spinCore {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(255, 60, 0, 0.14), transparent 28%),
+    radial-gradient(circle at bottom, rgba(255, 92, 0, 0.08), transparent 35%),
+    var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+/* 1. ПЛАВАЮЧИЙ ЛОГОТИП DISCORD */
+.server-logo {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 999;
+  width: 64px;
+  height: 64px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.server-logo:hover {
+  transform: scale(1.1) rotate(4deg);
+}
+
+.server-logo .app-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--accent-orange), var(--primary));
+  box-shadow: 0 10px 25px rgba(255, 60, 0, 0.25);
+}
+
+.app-icon-inner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+}
+
+.app-icon-core {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--bg-main);
+  animation: spinCore 3s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2. SPA В'ЮШКИ ТА ШЕЛЛ */
+.view-section {
+  display: none;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.view-section.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.page-header {
+  width: 100%;
+  max-width: 1160px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid var(--border-subtle);
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+  margin-bottom: 32px;
+  z-index: 100;
+}
+
+.page-header-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.back-button,
+.control-button {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 18px;
+  transition: all 0.2s;
+}
+
+.back-button:hover,
+.control-button:hover {
+  background: rgba(255, 60, 0, 0.15);
+  border-color: rgba(255, 60, 0, 0.3);
+}
+
+.year-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.year-button {
+  padding: 12px 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-muted);
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.year-button.active,
+.year-button:hover {
+  border-color: var(--primary);
+  background: rgba(255, 60, 0, 0.12);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 60, 0, 0.15);
+}
+
+/* 3. ГОЛОВНА (HERO) */
+.hero-shell {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin: 4vh auto;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+  background: radial-gradient(circle, rgba(255, 60, 0, 0.2), transparent 60%);
+  filter: blur(20px);
+}
+
+.hero-card {
+  position: relative;
+  border: 1px solid var(--border-glow);
+  border-radius: 40px;
+  background: var(--bg-card);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.hero-pill {
+  display: inline-block;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  padding: 8px 20px;
+  border: 1px solid var(--border-glow);
+  border-radius: 999px;
+  background: rgba(255, 60, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+.hero-center .app-icon {
+  width: 150px;
+  height: 150px;
+  border-radius: 36px;
+  background: radial-gradient(circle at top left, var(--accent-orange), var(--primary));
+  display: grid;
+  place-items: center;
+  margin: 0 auto 24px;
+  box-shadow: 0 15px 40px rgba(255, 60, 0, 0.3);
+  animation: floatIcon 5s ease-in-out infinite;
+}
+
+.hero-center .app-icon-inner {
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+}
+
+.hero-center .app-icon-core {
+  width: 48px;
+  height: 48px;
+  background: var(--bg-main);
+  border-radius: 12px;
+  animation: spinIcon 12s linear infinite;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero-subtitle {
+  margin: 8px 0 32px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+}
+
+.hero-button {
+  padding: 16px 36px;
+  background: linear-gradient(135deg, var(--primary), #ff6a2d);
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(255, 60, 0, 0.25);
+  transition: all 0.2s;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(255, 60, 0, 0.35);
+}
+
+/* 4. НОВИЙ СЛАЙДЕР ГОЛОСУВАННЯ (SPLIT VIEW) */
+.nomination-top-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(15, 15, 15, 0.9);
+  border-radius: 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-subtle);
+}
+
+.nav-arrow-small {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.nav-arrow-small:hover {
+  background: var(--primary);
+  transform: scale(1.08);
+}
+
+#nomCounter {
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+}
+
+.nomination-split-view {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 30px;
+}
+
+.nom-left {
+  background: rgba(15, 15, 15, 0.9);
+  padding: 48px;
+  border-radius: 32px;
+  border: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.nom-tag {
+  color: var(--primary);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.nom-title-display {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.nom-desc-display {
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+/* Карусель Кандидатів всередині лівої панелі */
+.candidate-slider-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+}
+
+.cand-arrow {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  z-index: 10;
+}
+
+.cand-arrow:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.08);
+}
+
+.cand-card {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 28px;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Контейнер медіа — без фіксованих розмірів, тільки обрамлення */
+.cand-media {
+  width: 100%;
+  margin: 0 auto 24px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(255, 60, 0, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Відео — завжди 16:9 */
+.cand-media.is-video {
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+/* Фото — природний розмір, фон чорний */
+.cand-media.is-photo {
+  background: #000;
+}
+
+/* Емодзі — квадрат невеликий */
+.cand-media.is-emoji {
+  aspect-ratio: 1 / 1;
+  max-width: 160px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(135deg, #ff7a2d, #ff3c00);
+  font-size: 4.5rem;
+}
+
+/* Фото: займає всю ширину, висота — природна фото */
+.cand-media img {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  display: block;
+  border: none;
+  border-radius: 0;
+}
+
+/* Відео iframe: заповнює aspect-ratio контейнер */
+.cand-media iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.cand-media.is-video {
+  position: relative;
+}
+
+.cand-info h3 {
+  font-size: 1.6rem;
+  margin: 0 0 6px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.cand-info span {
+  color: #ff007b;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.cand-info p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.cand-dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 24px;
+}
+
+.c-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.c-dot:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.c-dot.active {
+  background: var(--primary);
+  transform: scale(1.25);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* Права панель: Блок голосування */
+.nom-right {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.vote-action-box {
+  width: 100%;
+  background: rgba(15, 15, 15, 0.9);
+  padding: 60px 40px;
+  border-radius: 32px;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.vote-icon {
+  width: 90px;
+  height: 90px;
+  background: rgba(255, 60, 0, 0.1);
+  border: 2px solid var(--border-glow);
+  border-radius: 24px;
+  margin: 0 auto 24px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.vote-icon::before {
+  content: 'VOTE';
+  color: var(--primary);
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+}
+
+.vote-action-box h2 {
+  font-size: 1.6rem;
+  margin: 0 0 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.vote-action-box p {
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.btn-vote-main {
+  width: 100%;
+  padding: 20px;
+  border-radius: 18px;
+  border: none;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), #ff7a2d);
+  font-weight: 900;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 15px 35px rgba(255, 60, 0, 0.3);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn-vote-main:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 45px rgba(255, 60, 0, 0.4);
+}
+
+.btn-vote-main:active {
+  transform: translateY(-1px);
+}
+
+.btn-vote-main.voted {
+  background: rgba(255, 255, 255, 0.05);
+  color: #888;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: default;
+}
+
+.btn-vote-main.voted:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.vote-status-text {
+  margin-top: 18px;
+  font-weight: 700;
+  color: #00e676;
+  display: none;
+  font-size: 0.9rem;
+}
+
+/* 5. ЕКРАН ФІНАЛІЗАЦІЇ (SUBMIT SCREEN) */
+.submit-screen-container {
+  background: rgba(15, 15, 15, 0.9);
+  padding: 60px;
+  border-radius: 32px;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.submit-icon {
+  font-size: 5rem;
+  margin-bottom: 24px;
+  animation: floatIcon 4s ease-in-out infinite;
+}
+
+.submit-screen-container h2 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.submit-screen-container p {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.missing-votes-alert {
+  color: #ff3c00;
+  font-weight: bold;
+  margin: 24px 0;
+  padding: 20px;
+  background: rgba(255, 60, 0, 0.08);
+  border: 1px solid rgba(255, 60, 0, 0.2);
+  border-radius: 16px;
+  display: none;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.missing-votes-alert small {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  color: #ff007b;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 18px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 15px rgba(255, 60, 0, 0.1);
+}
+
+.form-submit {
+  width: 100%;
+  padding: 20px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 10px 25px rgba(255, 60, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.form-submit:hover {
+  background: #ff5c26;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(255, 60, 0, 0.3);
+}
+
+/* ОВЕРЛЕЙ УСПІХУ */
+.form-success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-content {
+  background: #0d0d0d;
+  padding: 50px 40px;
+  border-radius: 28px;
+  border: 2px solid var(--primary);
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(255, 60, 0, 0.3);
+}
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin: 0 auto 24px;
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.success-content h3 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.success-content p {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+/* 6. АРХІВ / РЕЗУЛЬТАТИ З ГУГЛ ТАБЛИЦІ */
+.winners-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.winner-card {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 30px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
+}
+
+.winner-card::before {
+  content: '🏆 ПЕРЕМОЖЕЦЬ';
+  display: block;
+  color: #ffd700;
+  font-weight: 900;
+  margin-bottom: 20px;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+}
+
+.winner-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ffd700;
+  margin: 0 auto 20px;
+  color: #000;
+  display: grid;
+  place-items: center;
+  font-size: 2.5rem;
+  font-weight: 900;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+}
+
+/* 7. КАЛЕНДАР ТА EMBED */
+.calendar-page {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.calendar-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar-card,
+.main-calendar-card {
+  background: rgba(15, 15, 15, 0.9);
+  padding: 28px;
+  border-radius: 24px;
+  border: 1px solid var(--border-subtle);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-cell {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  position: relative;
+  font-weight: 600;
+  font-size: 0.78rem;
+  max-height: 52px;
+}
+
+.calendar-cell-heading {
+  background: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 800;
+  font-size: 0.75rem;
+}
+
+.calendar-cell-today {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* Крапки на сітці календаря */
+.calendar-cell .event-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Крапка на міні-календарі (одна, абсолютна) */
+.mini-calendar-grid .event-dot {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+}
+
+.embed-container {
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 60, 0, 0.2);
+  background: #0a0a0a;
+}
+
+.embed-container iframe {
+  width: 100%;
+  height: 80vh;
+  min-height: 700px;
+  display: block;
+  border: none;
+}
+
+/* АНІМАЦІЇ */
+@keyframes floatIcon {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes spinIcon {
+  0% {
+    transform: rotate(-12deg);
+  }
+
+  100% {
+    transform: rotate(348deg);
+  }
+}
+
+/* МЕДІА-ЗАПИТИ (АДАПТИВНІСТЬ) */
+@media (max-width: 1024px) {
+
+  .nomination-split-view,
+  .calendar-page {
+    grid-template-columns: 1fr;
+  }
+
+  .winners-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nom-left {
+    padding: 30px;
+  }
+
+  .nom-title-display {
+    font-size: 2.2rem;
+  }
+
+  .vote-action-box {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 24px;
+  }
+
+  .year-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .page-header-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .submit-screen-container,
+  .success-content {
+    padding: 30px 20px;
+    border-radius: 24px;
+  }
+
+  .winners-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cand-card {
+    padding: 20px;
+  }
+
+  .cand-media {
+    font-size: 2.5rem;
+  }
+
+  .cand-media.is-emoji {
+    max-width: 120px;
+  }
+}
+
+/* =========================================
+   ДОДАТКОВІ СТИЛІ ДЛЯ КАЛЕНДАРЯ (ФІКС ШАПКИ)
+   ========================================= */
+.sidebar-header {
+  margin-bottom: 24px;
+}
+
+.sidebar-copy {
+  margin: 12px 0 24px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mini-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.mini-calendar-title {
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-calendar-title strong {
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.mini-nav {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mini-nav:hover {
+  background: var(--primary);
+}
+
+.calendar-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.calendar-main-label {
+  margin: 0 0 8px 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--accent-pink);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.calendar-main-title {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.calendar-main-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+}
+
+.icon-button:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* =========================================
+   КАЛЕНДАР: ПЕРЕГЛЯД ДНЯ + КАТЕГОРІЇ
+   ========================================= */
+
+/* Клітинки з подіями — кліки */
+.calendar-cell.has-events {
+  cursor: pointer;
+}
+
+.calendar-cell.has-events:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.calendar-cell-selected {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+  background: rgba(255, 60, 0, 0.1) !important;
+}
+
+/* Крапки під числом (новий layout) */
+.cell-day-num {
+  display: block;
+  line-height: 1;
+}
+
+.cell-dots {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+}
+
+.calendar-cell {
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 2px 14px;
+}
+
+/* Панель обраного дня */
+.day-panel-card {
+  animation: fadeSlide 0.25s ease;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.day-panel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.day-panel-date {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.day-panel-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 16px 0;
+}
+
+.day-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.day-event-item {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 3px solid var(--primary);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.day-event-cat {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.day-event-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.day-event-time {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.day-event-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 4px 0 0;
+}
+
+/* Легенда категорій */
+.category-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.cat-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* label-pill (якщо не визначено вище) */
+.label-pill {
+  display: inline-block;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  padding: 4px 12px;
+  border: 1px solid var(--border-glow);
+  border-radius: 999px;
+  background: rgba(255, 60, 0, 0.05);
+}
+
+/* =========================================
+   МІНІ-КАЛЕНДАР: СІТКА ТА КЛІТИНКИ
+   ========================================= */
+.mini-calendar-card {
+  width: 100%;
+}
+
+.mini-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.mini-calendar-grid .calendar-cell {
+  aspect-ratio: 1;
+  font-size: 0.72rem;
+  border-radius: 6px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.mini-calendar-grid .calendar-cell-heading {
+  font-size: 0.65rem;
+  background: none;
+  cursor: default;
+}
+
+.mini-calendar-grid .calendar-cell-today {
+  background: var(--primary);
+  color: #fff;
+}
+
+.mini-calendar-grid .calendar-cell-selected {
+  outline: 2px solid var(--primary);
+}
+
+.mini-calendar-grid .calendar-cell.has-events:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================
+   INLINE ПАНЕЛЬ ДНЯ (під великим календарем)
+   ========================================= */
+.inline-day-panel {
+  margin-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 20px;
+  animation: fadeSlide 0.2s ease;
+}
+
+.inline-day-panel .day-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-direction: row;
+}
+
+.inline-day-panel .day-panel-date {
+  font-size: 1.3rem;
+}
+
+.inline-day-panel .day-events-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.inline-day-panel .day-panel-empty {
+  text-align: left;
+}
+
+/* =========================================
+   TOOLTIP ДЛЯ КРАПОК ПОДІЙ
+   ========================================= */
+
+/* Прибираємо inline day panel стилі що більше не потрібні */
+.inline-day-panel {
+  display: none !important;
+}
+
+.cell-dots {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+}
+
+.event-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Tooltip контейнер */
+.event-dot-tooltip {
+  position: fixed;
+  z-index: 9999;
+  background: rgba(10, 10, 10, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 12px 16px;
+  min-width: 200px;
+  max-width: 280px;
+  pointer-events: none;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  animation: fadeSlide 0.15s ease;
+}
+
+.tooltip-date {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.tooltip-event {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tooltip-event:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.tooltip-event-cat {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tooltip-event-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tooltip-event-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   5 НАЙБЛИЖЧИХ ПОДІЙ
+   ========================================= */
+.upcoming-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.upcoming-event-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 18px 20px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.upcoming-event-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.upcoming-event-left {
+  padding-top: 4px;
+  flex-shrink: 0;
+}
+
+.upcoming-event-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.upcoming-event-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.upcoming-event-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.upcoming-event-cat {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.upcoming-event-diff {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.upcoming-event-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.upcoming-event-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.upcoming-event-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* =========================================
+   РЕЗУЛЬТАТИ: СЛАЙДЕР ПЕРЕМОЖЦІВ
+   ========================================= */
+.results-title {
+  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.winners-slider {
+  width: 100%;
+}
+
+.ws-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  transition: opacity 0.25s ease;
+}
+
+.ws-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.ws-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ws-dot.active {
+  background: var(--primary);
+  transform: scale(1.3);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+/* Картка переможця */
+.wc-card {
+  background: rgba(15, 15, 15, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.wc-card:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+}
+
+.wc-avatar {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff7a2d, #ff3c00);
+  display: grid;
+  place-items: center;
+}
+
+.wc-avatar-emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.wc-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wc-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wc-nom {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wc-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wc-user {
+  font-size: 0.78rem;
+  color: #ff007b;
+  font-weight: 700;
+}
+
+.wc-votes {
+  font-size: 0.75rem;
+  color: #ffd700;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* =========================================
+   LOGO SPIN: білий теж крутиться
+   ========================================= */
+.app-icon-inner {
+  animation: spinCore 6s linear infinite reverse;
+}
+
+/* =========================================
+   КОНСТИТУЦІЯ: ЗАГЛУШКА
+   ========================================= */
+.constitution-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.cp-icon {
+  font-size: 4rem;
+  margin-bottom: 8px;
+}
+
+.constitution-placeholder h2 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.constitution-placeholder p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.constitution-placeholder code {
+  background: rgba(255, 60, 0, 0.1);
+  border: 1px solid rgba(255, 60, 0, 0.2);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+
+/* Білий квадратик всередині чорного — як іконка стоп */
+.app-icon-stop {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: #ffffff;
+}
+
+/* =========================================
+   COMING SOON SCREEN
+   ========================================= */
+.coming-soon-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.cs-badge {
+  display: inline-block;
+  background: rgba(255, 60, 0, 0.12);
+  border: 1px solid var(--border-glow);
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  padding: 5px 18px;
+  border-radius: 999px;
+}
+
+.cs-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.cs-date {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(255, 60, 0, 0.08);
+  border: 1px solid rgba(255, 60, 0, 0.2);
+  padding: 10px 28px;
+  border-radius: 14px;
+}
+
+.cs-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 440px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cs-noms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.cs-nom-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.2s;
+}
+
+.cs-nom-card:hover {
+  border-color: rgba(255, 60, 0, 0.3);
+}
+
+.cs-nom-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.cs-nom-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.cs-nom-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   ALL WINNERS FULL LIST
+   ========================================= */
+.all-winners-section {
+  margin-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 32px;
+}
+
+.aw-heading {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.aw-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.aw-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  padding: 20px 14px 16px;
+  transition: border-color 0.2s, transform 0.2s;
+  text-align: center;
+}
+
+.aw-row:hover {
+  border-color: rgba(255, 60, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.aw-media {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.aw-emoji {
+  font-size: 2rem;
+  background: rgba(255, 60, 0, 0.1);
+}
+
+.aw-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aw-video-link,
+.cand-video-link {
+  font-size: 0.62rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-top: 4px;
+}
+
+.aw-video-link:hover,
+.cand-video-link:hover {
+  text-decoration: underline;
+}
+
+.aw-info {
+  width: 100%;
+  min-width: 0;
+}
+
+.aw-nom-title {
+  font-size: 0.62rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.aw-winner-name {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #fff;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aw-user {
+  font-size: 0.75rem;
+  color: #ff007b;
+  font-weight: 700;
+  display: block;
+  margin-top: 2px;
+}
+
+.aw-votes {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.08);
+  padding: 2px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* Відео кандидат у слайдері */
+.cand-video-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 3.5rem;
+}
+
+/* Логотип — зменшуємо чорний квадрат у верхньому куті */
+.server-logo {
+  width: 52px !important;
+  height: 52px !important;
+}
+
+.server-logo .app-icon-inner {
+  width: 28px !important;
+  height: 28px !important;
+  animation: none !important;
+}
+
+.server-logo .app-icon-core {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 3px !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+.server-logo .app-icon-stop {
+  width: 5px !important;
+  height: 5px !important;
+  border-radius: 1px !important;
+}
+
+/* =========================================
+   BIG WINNER CARDS SLIDER
+   ========================================= */
+.bc-header {
+  width: 100%;
+  background: rgba(255, 60, 0, 0.08);
+  border: 1px solid rgba(255, 60, 0, 0.2);
+  border-radius: 14px;
+  padding: 14px 24px;
+  margin-bottom: 24px;
+}
+
+.bc-label {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.bc-slider-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.bc-arrow {
+  flex-shrink: 0;
+  width: 52px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: center;
+  height: 64px;
+}
+
+.bc-arrow:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.bc-track {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  transition: opacity 0.22s ease;
+}
+
+.bc-track.bc-fade {
+  opacity: 0;
+}
+
+/* Одна картка */
+.bc-card {
+  background: rgba(15, 10, 10, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  padding: 32px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.bc-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 60, 0, 0.3);
+}
+
+/* Номер картки */
+.bc-num {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+}
+
+/* Аватар — коло */
+.bc-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 30px rgba(255, 60, 0, 0.3);
+}
+
+.bc-avatar-letter {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #000;
+  letter-spacing: -0.02em;
+}
+
+.bc-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ім'я, категорія, мітка */
+.bc-name {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.bc-category {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.bc-winner-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Прибираємо старі стилі ws-* що більше не потрібні */
+.ws-track,
+.ws-dots,
+.winners-slider {
+  display: none !important;
+}
+
+/* =========================================
+   ФІКСИ: ЛОГОТИП, МОБІЛЬНА, КАТЕГОРІЇ
+   ========================================= */
+
+/* ── Логотип у куті: анімація + правильні розміри ── */
+.server-logo {
+  width: 52px !important;
+  height: 52px !important;
+}
+
+.server-logo .app-icon {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.server-logo .app-icon-inner {
+  width: 28px !important;
+  height: 28px !important;
+  animation: spinCore 6s linear infinite reverse !important;
+}
+
+.server-logo .app-icon-core {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 3px !important;
+  animation: spinCore 3s linear infinite !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.server-logo .app-icon-stop {
+  width: 5px !important;
+  height: 5px !important;
+  border-radius: 1px !important;
+  background: #fff !important;
+  flex-shrink: 0 !important;
+}
+
+/* ── Головне лого (герой) — крутиться нормально ── */
+.hero-center .app-icon-core {
+  animation: spinCore 3s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-center .app-icon-stop {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* ── МОБІЛЬНА: переможці 1 картка в ряд ── */
+@media (max-width: 600px) {
+  .bc-track {
+    grid-template-columns: 1fr !important;
+  }
+
+  .bc-slider-wrap {
+    gap: 6px;
+  }
+
+  .bc-card {
+    padding: 24px 16px 20px;
+  }
+
+  .bc-arrow {
+    width: 40px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .aw-list {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+  }
+
+  .nomination-split-view {
+    flex-direction: column !important;
+  }
+
+  .nom-left,
+  .nom-right {
+    width: 100% !important;
+  }
+
+  .candidate-slider-area {
+    gap: 8px;
+  }
+
+  .cand-arrow {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .page-header {
+    flex-wrap: wrap;
+    border-radius: 20px !important;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+
+  .year-buttons {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .year-button {
+    padding: 8px 16px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .bc-header {
+    padding: 10px 16px;
+  }
+
+  .bc-label {
+    font-size: 0.65rem;
+  }
+
+  .calendar-page {
+    grid-template-columns: 1fr !important;
+  }
+
+  .winners-slider,
+  .bc-slider-wrap {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-shell {
+    padding: 12px 10px;
+  }
+
+  .bc-track {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .aw-list {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .nom-title-display {
+    font-size: 1.6rem !important;
+  }
+
+  .cand-card {
+    padding: 16px !important;
+  }
+}
+
+/* =========================================
+   ФІКСИ З СКРІНІВ
+   ========================================= */
+
+/* 1. Прибрати VOTE іконку з vote-action-box */
+.vote-icon {
+  display: none !important;
+}
+
+/* 2. vote-action-box — зменшити, прибрати зайвий padding */
+.vote-action-box {
+  padding: 32px 28px !important;
+}
+
+.vote-action-box h2 {
+  font-size: 1.3rem !important;
+  margin-bottom: 8px !important;
+}
+
+.vote-action-box p {
+  margin-bottom: 24px !important;
+  font-size: 0.9rem !important;
+}
+
+/* 3. Тема 2026 — фон залишається чорним, змінюємо лише UI елементи */
+/* Прибираємо background на #view-year */
+
+
+/* Картки світлі */
+
+/* 4. Відео в "УСІ ПЕРЕМОЖЦІ" — лише емодзі + клікабельне посилання, без тексту */
+.aw-emoji .aw-video-link {
+  display: block;
+  font-size: 0 !important;
+  /* приховуємо старий текст */
+}
+
+.aw-emoji .aw-video-link::after {
+  content: '▶';
+  font-size: 1rem;
+  color: var(--primary);
+}
+
+/* 5. Архів 2025 — сітка карток */
+.arch-header {
+  text-align: center;
+  padding: 24px 0 32px;
+}
+
+.arch-year-label {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--primary);
+  text-transform: uppercase;
+  background: rgba(255, 60, 0, 0.08);
+  border: 1px solid rgba(255, 60, 0, 0.2);
+  padding: 8px 24px;
+  border-radius: 999px;
+}
+
+.arch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.arch-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 24px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+  text-align: center;
+}
+
+.arch-card:hover {
+  border-color: rgba(255, 60, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.arch-num {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arch-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(255, 60, 0, 0.2);
+}
+
+.arch-avatar-letter {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #000;
+}
+
+.arch-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.arch-nom {
+  font-size: 0.6rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+}
+
+.arch-name {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.arch-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 600px) {
+  .arch-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 6. Лого — білий квадратик правильний розмір (ще раз override) */
+.server-logo .app-icon-stop {
+  width: 4px !important;
+  height: 4px !important;
+  background: #fff !important;
+}
+
+/* =========================================
+   ТЕМА 2026 — ФІОЛЕТОВА ПАЛІТРА
+   Лише картки і UI елементи, фон чорний
+   ========================================= */
+:root {
+  --purple-main: #7c3aed;
+  --purple-light: #a855f7;
+  --purple-dark: #4c1d95;
+  --purple-glow: rgba(124, 58, 237, 0.35);
+  --purple-subtle: rgba(124, 58, 237, 0.1);
+  --purple-border: rgba(168, 85, 247, 0.25);
+  --purple-card: rgba(76, 29, 149, 0.18);
+}
+
+/* Nomination top nav */
+.theme-2026 .nomination-top-nav {
+  background: rgba(124, 58, 237, 0.08);
+  border-bottom: 1px solid var(--purple-border);
+}
+
+.theme-2026 #nomCounter {
+  color: var(--purple-light) !important;
+}
+
+/* Стрілки навігації */
+.theme-2026 .nav-arrow-small {
+  background: var(--purple-subtle) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .nav-arrow-small:hover {
+  background: var(--purple-main) !important;
+  box-shadow: 0 0 16px var(--purple-glow) !important;
+}
+
+/* Ліва колонка */
+.theme-2026 .nom-left {
+  background: var(--purple-card) !important;
+  border: 1px solid var(--purple-border) !important;
+  box-shadow: 0 8px 40px rgba(124, 58, 237, 0.12) !important;
+}
+
+.theme-2026 .nom-tag {
+  color: var(--purple-light) !important;
+}
+
+/* Картка кандидата */
+.theme-2026 .cand-card {
+  background: rgba(124, 58, 237, 0.12) !important;
+  border-color: var(--purple-border) !important;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.15) !important;
+}
+
+.theme-2026 #candUserDisplay {
+  color: var(--purple-light) !important;
+}
+
+/* Стрілки кандидатів */
+.theme-2026 .cand-arrow {
+  background: var(--purple-subtle) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .cand-arrow:hover {
+  background: var(--purple-main) !important;
+  border-color: var(--purple-main) !important;
+  box-shadow: 0 0 16px var(--purple-glow) !important;
+}
+
+/* Крапки */
+.theme-2026 .c-dot {
+  background: rgba(168, 85, 247, 0.3);
+}
+
+.theme-2026 .c-dot.active {
+  background: var(--purple-main);
+  box-shadow: 0 0 8px var(--purple-glow);
+}
+
+/* Права колонка — голосування */
+.theme-2026 .vote-action-box {
+  background: var(--purple-card) !important;
+  border-color: var(--purple-border) !important;
+  box-shadow: 0 8px 40px rgba(124, 58, 237, 0.15) !important;
+}
+
+.theme-2026 .vote-action-box h2 {
+  color: #fff !important;
+}
+
+.theme-2026 .vote-action-box p {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Кнопка голосування */
+.theme-2026 .btn-vote-main {
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple-main)) !important;
+  box-shadow: 0 8px 24px var(--purple-glow) !important;
+}
+
+.theme-2026 .btn-vote-main:hover {
+  background: linear-gradient(135deg, var(--purple-main), var(--purple-light)) !important;
+}
+
+/* Екран фіналізації */
+.theme-2026 .submit-screen-container {
+  background: var(--purple-card) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .discord-input-group input {
+  background: rgba(124, 58, 237, 0.08) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .discord-input-group input:focus {
+  border-color: var(--purple-main) !important;
+  box-shadow: 0 0 0 3px var(--purple-glow) !important;
+}
+
+.theme-2026 .form-submit {
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple-main)) !important;
+  box-shadow: 0 8px 24px var(--purple-glow) !important;
+}
+
+/* Результати — header */
+.theme-2026 .bc-header {
+  background: var(--purple-subtle) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .bc-label {
+  color: var(--purple-light) !important;
+}
+
+/* Великі картки переможців */
+.theme-2026 .bc-card {
+  background: var(--purple-card) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .bc-card:hover {
+  border-color: var(--purple-light) !important;
+  box-shadow: 0 8px 32px var(--purple-glow) !important;
+}
+
+.theme-2026 .bc-num {
+  background: var(--purple-main) !important;
+  box-shadow: 0 4px 12px var(--purple-glow) !important;
+}
+
+.theme-2026 .bc-avatar {
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple-main)) !important;
+  box-shadow: 0 8px 24px var(--purple-glow) !important;
+}
+
+.theme-2026 .bc-avatar-letter {
+  color: #fff !important;
+}
+
+/* Стрілки слайдера переможців */
+.theme-2026 .bc-arrow {
+  background: var(--purple-subtle) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .bc-arrow:hover {
+  background: var(--purple-main) !important;
+  border-color: var(--purple-main) !important;
+  box-shadow: 0 0 16px var(--purple-glow) !important;
+}
+
+/* УСІ ПЕРЕМОЖЦІ */
+.theme-2026 .all-winners-section {
+  border-top-color: var(--purple-border) !important;
+}
+
+.theme-2026 .aw-heading {
+  color: var(--purple-light) !important;
+}
+
+.theme-2026 .aw-row {
+  background: var(--purple-card) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .aw-row:hover {
+  border-color: var(--purple-light) !important;
+}
+
+.theme-2026 .aw-nom-title {
+  color: var(--purple-light) !important;
+}
+
+.theme-2026 .aw-media.aw-emoji {
+  background: var(--purple-subtle) !important;
+}
+
+.theme-2026 .aw-votes {
+  color: var(--purple-light) !important;
+  background: var(--purple-subtle) !important;
+}
+
+/* Coming Soon */
+.theme-2026 .cs-badge {
+  background: var(--purple-subtle) !important;
+  border-color: var(--purple-border) !important;
+  color: var(--purple-light) !important;
+}
+
+.theme-2026 .cs-date {
+  color: var(--purple-light) !important;
+  background: var(--purple-subtle) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .cs-nom-card {
+  background: var(--purple-card) !important;
+  border-color: var(--purple-border) !important;
+}
+
+.theme-2026 .cs-nom-card:hover {
+  border-color: var(--purple-light) !important;
+}
+
+.theme-2026 .missing-votes-alert {
+  background: var(--purple-subtle) !important;
+  border-color: var(--purple-border) !important;
+  color: var(--purple-light) !important;
+}
+
+/* =========================================
+   ПОСВІДЧЕННЯ ПЕРЕМОЖЦЯ — CERT CARD
+   ========================================= */
+.cand-media.is-cert {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  animation: certAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Анімація появи картки */
+@keyframes certAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(16px) rotateX(8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotateX(0deg);
+  }
+}
+
+/* Анімація зміни кандидата */
+@keyframes candSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes candSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}
+
+.cand-media {
+  animation: candSlideIn 0.3s ease both;
+}
+
+.cert-card {
+  width: 100%;
+  background: #0a0a0a;
+  border-radius: 18px;
+  border: 2px solid var(--purple-main);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.3),
+    0 12px 40px rgba(124, 58, 237, 0.3),
+    inset 0 0 60px rgba(124, 58, 237, 0.04);
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  position: relative;
+}
+
+/* Верхня смуга */
+.cert-top {
+  background: linear-gradient(90deg, #1e0a3c, #2d1060);
+  border-bottom: 1px solid var(--purple-border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cert-flag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffd700;
+}
+
+.cert-ministry {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.5);
+  flex: 1;
+  text-align: center;
+}
+
+.cert-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--purple-light);
+  letter-spacing: 0.05em;
+}
+
+/* Блок з назвою */
+.cert-title-block {
+  background: linear-gradient(135deg, #1a0a3a, #0d0620);
+  padding: 10px 16px 8px;
+  border-bottom: 1px solid var(--purple-border);
+}
+
+.cert-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.cert-logo-text {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, var(--purple-light), #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+}
+
+.cert-official {
+  font-size: 0.5rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #ffd700;
+  text-transform: uppercase;
+  border: 1px solid #ffd700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.cert-main-title {
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  line-height: 1.2;
+}
+
+/* Тіло картки */
+.cert-body {
+  display: flex;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #080808;
+}
+
+/* Фото */
+.cert-photo {
+  width: 90px;
+  height: 110px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid var(--purple-main);
+  background: var(--purple-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px var(--purple-glow);
+}
+
+.cert-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.cert-photo-placeholder {
+  font-size: 2.5rem;
+}
+
+/* Поля */
+.cert-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.cert-nom-title {
+  font-size: 0.6rem;
+  font-weight: 900;
+  color: var(--purple-light);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--purple-border);
+}
+
+.cert-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+}
+
+.cert-icon {
+  font-size: 0.7rem;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.cert-label {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.62rem;
+  min-width: 55px;
+}
+
+.cert-val {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.68rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cert-level {
+  color: #ffd700 !important;
+  font-size: 0.72rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.1em;
+}
+
+/* Декоративна смуга знизу */
+.cert-card::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, var(--purple-dark), var(--purple-main), var(--purple-light), var(--purple-main), var(--purple-dark));
+}
+
+
+/* =========================================
+   CERT/VIDEO: повноекранний вигляд без cand-info
+   ========================================= */
+
+/* Коли медіа = cert або video — ховаємо cand-info і розтягуємо */
+.cand-card:has(.cand-media.is-cert) .cand-info,
+.cand-card:has(.cand-media.is-video) .cand-info {
+  display: none !important;
+}
+
+.cand-card:has(.cand-media.is-cert),
+.cand-card:has(.cand-media.is-video) {
+  flex-direction: column;
+}
+
+.cand-card:has(.cand-media.is-cert) .cand-media,
+.cand-card:has(.cand-media.is-video) .cand-media {
+  flex: 1;
+  width: 100%;
+}
+
+/* Cert не сплющена — природна висота */
+.cand-media.is-cert {
+  height: auto !important;
+  aspect-ratio: unset !important;
+  min-height: unset !important;
+}
+
+/* Ім'я та нік показуємо з cert-card, не з cand-info */
+
+/* Анімація для cand-card (весь блок) */
+@keyframes candSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Анімація для заголовку номінації */
+.nom-title-display {
+  animation: nomFadeUp 0.35s ease both;
+}
+
+@keyframes nomFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cert card hover ефект */
+.cert-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.cert-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.5),
+    0 20px 60px rgba(124, 58, 237, 0.45),
+    inset 0 0 60px rgba(124, 58, 237, 0.06) !important;
+  transform: translateY(-2px);
+}
+
+/* Пульсація рамки cert */
+.cert-card {
+  animation: certBorderPulse 3s ease-in-out infinite;
+}
+
+@keyframes certBorderPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.3), 0 12px 40px rgba(124, 58, 237, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.6), 0 16px 50px rgba(124, 58, 237, 0.5);
+  }
+}
+
+/* =========================================
+   ВІДЕО EMBED — адаптивний фрейм
+   ========================================= */
+.cand-media.is-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--purple-border, rgba(168, 85, 247, 0.25));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.cand-media.is-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+  border-radius: 16px;
+}
+
+/* Якщо є відео — ховаємо cand-info (ім'я/опис) */
+.cand-card:has(.cand-media.is-video) .cand-info {
+  display: none !important;
+}
+
+/* =========================================
+   ФІКС: МАКСИМАЛЬНО ВЕЛИКИЙ ВІДЕОПЛЕЄР
+   ========================================= */
+
+/* Робимо саму картку прозорою і без відступів, щоб відео розтягнулося */
+.cand-card:has(.cand-media.is-video) {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Прибираємо зайві відступи знизу і додаємо красиву фіолетову тінь самому плеєру */
+.cand-media.is-video {
+  margin: 0 !important;
+  border-radius: 20px !important;
+  border: 2px solid var(--purple-main) !important;
+  box-shadow: 0 15px 40px rgba(124, 58, 237, 0.25) !important;
+}
+
+/* Заокруглення країв самого iframe, щоб не вилазили за рамку */
+.cand-media.is-video iframe {
+  border-radius: 18px !important;
+}
+
+/* Зменшуємо відступи в усій лівій панелі, щоб виділити плеєру ще більше ширини */
+.nom-left:has(.cand-media.is-video) {
+  padding: 30px !important;
+}
+
+/* Притискаємо стрілки перемикання ближче до самого відео */
+.candidate-slider-area:has(.cand-media.is-video) {
+  gap: 12px !important;
+}
+
+/* =========================================
+   ФІКС: ВЕЛИКЕ ПОСВІДЧЕННЯ БЕЗ ЗАЙВОЇ РАМКИ
+   ========================================= */
+
+/* Прибираємо фонову картку-контейнер, так само як для відео */
+.cand-card:has(.cand-media.is-cert) {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Центруємо картку і задаємо ідеальну ширину (щоб вона не розтягнулась як ковбаса на весь екран) */
+.cand-media.is-cert {
+  margin: 0 auto !important;
+  max-width: 560px !important;
+  width: 100% !important;
+}
+
+/* Трохи притискаємо стрілки ближче до посвідчення */
+.candidate-slider-area:has(.cand-media.is-cert) {
+  gap: 16px !important;
+}
+
+/* =========================================
+   ФІКС: КОНСТИТУЦІЯ У ФОРМАТІ А4
+   ========================================= */
+
+/* Центруємо весь блок Конституції на сторінці */
+#view-constitution.active {
+  display: flex;
+  justify-content: center;
+}
+
+#view-constitution.active .page-card {
+  width: 100%;
+  max-width: 850px;
+  /* Оптимальна ширина аркуша А4 */
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Робимо контейнер схожим на аркуш паперу */
+.embed-container {
+  width: 100% !important;
+  height: 85vh !important;
+  min-height: 850px !important;
+  margin: 0 auto !important;
+  border-radius: 8px !important;
+  /* Менше заокруглення, ближче до прямокутника */
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: #fff !important;
+  /* Білий фон під сам документ */
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Фрейм розтягуємо рівно по контейнеру */
+.embed-container iframe {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  border-radius: 6px !important;
+}
